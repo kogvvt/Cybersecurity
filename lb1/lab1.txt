@@ -1,0 +1,45 @@
+1.1
+
+openssl rand -base64 4
+
+openssl dgst -md5 ex1.txt
+
+md5 powinien zawsze dac to samo wyjscie z danego wejscia
+
+wlasciwosci funkcji hashujacej:
+	- latwo otrzymac hash z tekstu jawnego
+	- niemozliwe otrzymac tekst jawny z hasha
+	- hash zawsze okreslonej dlugosci
+	- hello --> (openssl, md5) --> xasda
+	  hello --> (generator, md5) --> xasda
+	  Hello --> ? --> dfgdf
+	 
+trzeba uwazac na znak nowej linii!!! bo zepsuje
+
+echo -n "hello" > ex1.txt
+a nie 
+echo "hello" > ex1.txt
+bo dokleja newline
+
+| potoooooooook pipeeeeee jak se chcemy ominac uzycie pliku
+
+echo -n "hello" | base64
+echo -n "hello" | openssl dgst -md5 
+echo -n "hello" | base64 | cut -c 2 
+
+ODP ZADANIA:
+openssl rand -base64 4 | openssl dgst -md5
+
+======
+1.2
+head /dev/urandom | base64 | tr -cd [:alnum:] | head -c 16 | openssl dgst -md5
+
+ALBO:
+cat /dev/urandom | base64 | head -n 1 | tr -cd [:alnum:] | cut -c -16 | openssl dgst -md5
+
+=====
+1.3
+
+crunch 3 3 0123456789 > setki.txt
+crunch 3 3 0123456789 | openssl dgst -sha1 > setki.txt
+???
